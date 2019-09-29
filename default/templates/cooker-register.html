@@ -1,0 +1,8 @@
+{% load widget_tweaks %}
+<form method="POST" id="cookerForm">
+    {% csrf_token %}
+    {% for i in form %}
+        {% render_field i class="form-control input-margin" placeholder=i.label%}
+    {% endfor %}
+    <button class="btn btn-cooker" type="submit">Sign in(cooker)</button>
+</form>
