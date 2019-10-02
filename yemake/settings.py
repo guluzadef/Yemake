@@ -26,6 +26,13 @@ SECRET_KEY = '7p)nw1@-808cot8sp05m4hao^e68j9&bv#24qr(0^nktfze7%('
 DEBUG = True
 
 ALLOWED_HOSTS = []
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "elxjd.2014@gmail.com"
+EMAIL_HOST_PASSWORD ="ogfzkfouditsahvy"
+
 
 
 # Application definition
@@ -40,9 +47,22 @@ INSTALLED_APPS = [
     'base_user.apps.BaseUserConfig',
     'default.apps.DefaultConfig',
     'widget_tweaks',
+    'easy_thumbnails',
+    'sorl.thumbnail',
+    'image_cropping',
+    'celery',
+    'django_celery_results',
+    'django_celery_beat',
 
 ]
+CELERY_RESULT_BACKEND = 'django-db'
 
+from easy_thumbnails.conf import Settings as thumbnail_settings
+THUMBNAIL_PROCESSORS = (
+    'image_cropping.thumbnail_processors.crop_corners',
+) + thumbnail_settings.THUMBNAIL_PROCESSORS
+IMAGE_CROPPING_BACKEND = 'image_cropping.backends.easy_thumbs.EasyThumbnailsBackend'
+IMAGE_CROPPING_BACKEND_PARAMS = {}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

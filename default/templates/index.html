@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load thumbnail %}
 <html lang="en">
 
 
@@ -54,6 +55,30 @@
 <!-- Header
 ============================================= -->
 <header id="home">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tag }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Start Navigation -->
     <nav class="navbar navbar-default navbar-fixed navbar-transparent dark bootsnav shadow-less">
@@ -75,7 +100,7 @@
                 </button>
                 <a class="navbar-brand" href="index.html">
                     {% for i in sitename %}
-                        <img src="{{ i.icon }}" alt="">
+{#                        <img src="{{ i.icon.url }}" style="width: 100px" height="100px" alt="">#}
                         <a href="{% url 'index' %}"><h2>{{ i.name }}</h2></a>
                     {% endfor %}
                     {#                    <img src="{% static 'img/logo.png' %}" class="logo logo-scrolled" alt="Logo">#}
@@ -100,43 +125,16 @@
         <div class="side">
             <a href="#" class="close-side"><i class="fa fa-times"></i></a>
             <div class="widget">
-                <h4 class="title">About Us</h4>
-                <p>
-                    Arrived compass prepare an on as. Reasonable particular on my it in sympathize. Size now easy eat
-                    hand how. Unwilling he departure elsewhere dejection at. Heart large seems may purse means few
-                    blind.
-                </p>
+                <div class="changes">
+                    <div class="btn login">Login</div>
+                    <div class="btn register">Register</div>
+                </div>
+
             </div>
-            <div class="widget opening-hours">
-                <h4 class="title">Openig Hours</h4>
-                <ul>
-                    <li>
-                        <span> Mon - Tues :  </span>
-                        <div class="pull-right"> 6.00 am - 10.00 pm</div>
-                    </li>
-                    <li>
-                        <span> Wednes - Thurs :</span>
-                        <div class="pull-right"> 8.00 am - 6.00 pm</div>
-                    </li>
-                    <li>
-                        <span> Launch :</span>
-                        <div class="pull-right"> Everyday</div>
-                    </li>
-                    <li>
-                        <span> Sun : </span>
-                        <div class="pull-right closed"> Closed</div>
-                    </li>
-                </ul>
-            </div>
-            <div class="widget">
-                <h4 class="title">Our Menus</h4>
-                <ul>
-                    <li><a href="#">Chees croissants</a></li>
-                    <li><a href="#">Bruschetti</a></li>
-                    <li><a href="#">Awesome Vegetables</a></li>
-                    <li><a href="#">Tasty Snacks</a></li>
-                    <li><a href="#">Meal for whole family</a></li>
-                </ul>
+            <div class="widget choice"></div>
+
+            <div class="widget select">
+
             </div>
             <div class="widget social">
                 <h4 class="title">Connect With Us</h4>
@@ -155,70 +153,70 @@
 
 </header>
 <!-- End Header -->
-
-
 <!-- Start Banner
-============================================= -->
-{% for obj in main %}
-    <div class="banner-area ds-fonts text-light video-bg-live bg-fixed"
-         style="background-image:url('{{ obj.icon_food.url }}')">
-        <div class="player"
-             data-property="{videoURL:'{{ obj.video_url }}',containment:'.video-bg-live', showControls:false, autoPlay:true, zoom:0, loop:true, mute:true, startAt:5, opacity:1, quality:'default'}"></div>
-        <div id="bootcarousel" class="carousel transparent-nav slide carousel-fade animate_text" data-ride="carousel">
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner shadow dark">
-                <div class="item active">
-                    <div class="box-table">
-                        <div class="box-cell">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <div class="content">
-                                            <h2 data-animation="animated fadeInUp">{{ obj.title }}</h2>
-                                            <h1 data-animation="animated slideInLeft">{{ obj.description }}</h1>
-                                            <div class="lists" data-animation="animated slideInUp">
-                                                <ul>
-                                                    <li>
-                                                        <i class="flaticon-hamburger"></i> {{ obj.food_count }}
-                                                    </li>
-                                                </ul>
-                                            </div>
+{% block body %}
 
+============================================= -->
+    {% for obj in main %}
+        <div class="banner-area ds-fonts text-light video-bg-live bg-fixed"
+             style="background-image:url('{{ obj.icon_food.url }}')">
+            <div class="player"
+                 data-property="{videoURL:'{{ obj.video_url }}',containment:'.video-bg-live', showControls:false, autoPlay:true, zoom:0, loop:true, mute:true, startAt:5, opacity:1, quality:'default'}"></div>
+            <div id="bootcarousel" class="carousel transparent-nav slide carousel-fade animate_text"
+                 data-ride="carousel">
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner shadow dark">
+                    <div class="item active">
+                        <div class="box-table">
+                            <div class="box-cell">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="content">
+                                                <h2 data-animation="animated fadeInUp">{{ obj.title }}</h2>
+                                                <h1 data-animation="animated slideInLeft">{{ obj.description }}</h1>
+                                                <div class="lists" data-animation="animated slideInUp">
+                                                    <ul>
+                                                        <li>
+                                                            <i class="flaticon-hamburger"></i> {{ obj.food_count }}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
+                <!-- End Wrapper for slides -->
+
+                <!-- Left and right controls -->
 
             </div>
-            <!-- End Wrapper for slides -->
-
-            <!-- Left and right controls -->
-
+            <!-- Shape -->
+            <div class="wavesshape">
+                <img src="{% static 'img/shape.png' %}" alt="Shape">
+            </div>
+            <!-- Shape -->
         </div>
-        <!-- Shape -->
-        <div class="wavesshape">
-            <img src="{% static 'img/shape.png' %}" alt="Shape">
-        </div>
-        <!-- Shape -->
-    </div>
-{% endfor %}
-<!-- End Banner -->
+    {% endfor %}
+    <!-- End Banner -->
 
 
-<!-- Start About
-============================================= -->
-<!-- End About -->
+    <!-- Start About
+    ============================================= -->
+    <!-- End About -->
 
-<!-- Start Services
-============================================= -->
-<!-- End Services -->
+    <!-- Start Services
+    ============================================= -->
+    <!-- End Services -->
 
-<!-- Start Food Menu
-============================================= -->
-{% block body %}
+    <!-- Start Food Menu
+    ============================================= -->
 
     <div class="food-menu-area inc-isotop default-padding">
         <div class="container">
@@ -247,7 +245,9 @@
                                 <div class="item">
                                     <div class="thumb">
                                         <a href="#">
-                                            <img src="{{ food.image.url }}" style="width: 100%" >
+                                            {% thumbnail food.image "360x270" crop="center" as img %}
+                                                <a href="{% url 'detail-food' food.id %}"><img src="{{ img.url }}"> </a>
+                                            {% endthumbnail %}
                                         </a>
                                         <div class="price">
                                             <h5>{{ food.price }}</h5>
@@ -276,136 +276,136 @@
         </div>
     </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="site-heading text-center">
-                        <h2>{{ second.name }}</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="site-heading text-center">
+                    <h2>{{ second.name }}</h2>
 
-                    </div>
                 </div>
             </div>
-            <div class="food-menu-area text-center">
-                <div class="row">
-                    <div class="col-md-12 food-menu-content">
+        </div>
+        <div class="food-menu-area text-center">
+            <div class="row">
+                <div class="col-md-12 food-menu-content">
 
-                        <!-- End Mixitup Nav-->
+                    <!-- End Mixitup Nav-->
 
-                        <div class="row text-center masonary">
-                            <div id="portfolio-grid" class="menu-lists text-center col-3">
-                                <!-- Single Item -->
-                                <div class="item-single pf-item pancakes meat">
-                                    <div class="item">
-                                        <div class="thumb">
-                                            <a href="#">
-                                                <img src="{% static 'img/menu/1.jpg' %}" alt="Thumb">
-                                            </a>
-                                            <div class="price">
-                                                <h5>$5.90</h5>
-                                            </div>
+                    <div class="row text-center masonary">
+                        <div id="portfolio-grid" class="menu-lists text-center col-3">
+                            <!-- Single Item -->
+                            <div class="item-single pf-item pancakes meat">
+                                <div class="item">
+                                    <div class="thumb">
+                                        <a href="#">
+                                            <img src="{% static 'img/menu/1.jpg' %}" alt="Thumb">
+                                        </a>
+                                        <div class="price">
+                                            <h5>$5.90</h5>
                                         </div>
-                                        <div class="info">
-                                            <h4><a href="#">Crispy Crust Pizzeria</a></h4>
-                                            <span>Mutton / Olive Oil / Salt</span>
-                                            <p>
-                                                Considered introduced themselves mr to discretion at. Means among saw
-                                                hopes
-                                                for. Death mirth in oh learn he equal on.
-                                            </p>
-                                            <div class="button">
-                                                <a href="#">Order Now</a>
-                                            </div>
+                                    </div>
+                                    <div class="info">
+                                        <h4><a href="#">Crispy Crust Pizzeria</a></h4>
+                                        <span>Mutton / Olive Oil / Salt</span>
+                                        <p>
+                                            Considered introduced themselves mr to discretion at. Means among saw
+                                            hopes
+                                            for. Death mirth in oh learn he equal on.
+                                        </p>
+                                        <div class="button">
+                                            <a href="#">Order Now</a>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- End Single Item -->
-                                <!-- Single Item -->
-                                <div class="item-single pf-item sandwiches vegetarian">
-                                    <div class="item">
-                                        <div class="thumb">
-                                            <a href="#">
-                                                <img src="{% static 'img/menu/2.jpg' %}" alt="Thumb">
-                                            </a>
-                                            <div class="price">
-                                                <h5>$18.10</h5>
-                                            </div>
-                                        </div>
-                                        <div class="info">
-                                            <h4><a href="#">Luger Burger</a></h4>
-                                            <span>Beef / Olive Oil / Salt</span>
-                                            <p>
-                                                Considered introduced themselves mr to discretion at. Means among saw
-                                                hopes
-                                                for. Death mirth in oh learn he equal on.
-                                            </p>
-                                            <div class="button">
-                                                <a href="#">Order Now</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Single Item -->
-                                <!-- Single Item -->
-                                <div class="item-single pf-item sandwiches brunch">
-                                    <div class="item">
-                                        <div class="thumb">
-                                            <a href="#">
-                                                <img src="{% static 'img/menu/3.jpg' %}" alt="Thumb">
-                                            </a>
-                                            <div class="price">
-                                                <h5>$6.00</h5>
-                                            </div>
-                                        </div>
-                                        <div class="info">
-                                            <h4><a href="#">Fries McDonald's</a></h4>
-                                            <span>Chicken / Olive Oil / Salt</span>
-                                            <p>
-                                                Considered introduced themselves mr to discretion at. Means among saw
-                                                hopes
-                                                for. Death mirth in oh learn he equal on.
-                                            </p>
-                                            <div class="button">
-                                                <a href="#">Order Now</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Single Item -->
-                                <!-- Single Item -->
-                                <div class="item-single pf-item brunch">
-                                    <div class="item">
-                                        <div class="thumb">
-                                            <a href="#">
-                                                <img src="{% static 'img/menu/5.jpg' %}" alt="Thumb">
-                                            </a>
-                                            <div class="price">
-                                                <h5>$11.50</h5>
-                                            </div>
-                                        </div>
-                                        <div class="info">
-                                            <h4><a href="#">Chicken Popeyes</a></h4>
-                                            <span>Mutton / Olive Oil / Salt</span>
-                                            <p>
-                                                Considered introduced themselves mr to discretion at. Means among saw
-                                                hopes
-                                                for. Death mirth in oh learn he equal on.
-                                            </p>
-                                            <div class="button">
-                                                <a href="#">Order Now</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Single Item -->
-                                <!-- Single Item -->
-
                             </div>
+                            <!-- End Single Item -->
+                            <!-- Single Item -->
+                            <div class="item-single pf-item sandwiches vegetarian">
+                                <div class="item">
+                                    <div class="thumb">
+                                        <a href="#">
+                                            <img src="{% static 'img/menu/2.jpg' %}" alt="Thumb">
+                                        </a>
+                                        <div class="price">
+                                            <h5>$18.10</h5>
+                                        </div>
+                                    </div>
+                                    <div class="info">
+                                        <h4><a href="#">Luger Burger</a></h4>
+                                        <span>Beef / Olive Oil / Salt</span>
+                                        <p>
+                                            Considered introduced themselves mr to discretion at. Means among saw
+                                            hopes
+                                            for. Death mirth in oh learn he equal on.
+                                        </p>
+                                        <div class="button">
+                                            <a href="#">Order Now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Single Item -->
+                            <!-- Single Item -->
+                            <div class="item-single pf-item sandwiches brunch">
+                                <div class="item">
+                                    <div class="thumb">
+                                        <a href="#">
+                                            <img src="{% static 'img/menu/3.jpg' %}" alt="Thumb">
+                                        </a>
+                                        <div class="price">
+                                            <h5>$6.00</h5>
+                                        </div>
+                                    </div>
+                                    <div class="info">
+                                        <h4><a href="#">Fries McDonald's</a></h4>
+                                        <span>Chicken / Olive Oil / Salt</span>
+                                        <p>
+                                            Considered introduced themselves mr to discretion at. Means among saw
+                                            hopes
+                                            for. Death mirth in oh learn he equal on.
+                                        </p>
+                                        <div class="button">
+                                            <a href="#">Order Now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Single Item -->
+                            <!-- Single Item -->
+                            <div class="item-single pf-item brunch">
+                                <div class="item">
+                                    <div class="thumb">
+                                        <a href="#">
+                                            <img src="{% static 'img/menu/5.jpg' %}" alt="Thumb">
+                                        </a>
+                                        <div class="price">
+                                            <h5>$11.50</h5>
+                                        </div>
+                                    </div>
+                                    <div class="info">
+                                        <h4><a href="#">Chicken Popeyes</a></h4>
+                                        <span>Mutton / Olive Oil / Salt</span>
+                                        <p>
+                                            Considered introduced themselves mr to discretion at. Means among saw
+                                            hopes
+                                            for. Death mirth in oh learn he equal on.
+                                        </p>
+                                        <div class="button">
+                                            <a href="#">Order Now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Single Item -->
+                            <!-- Single Item -->
+
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
+
+    </div>
 
     </div>
     <!-- End Food Menu -->
@@ -428,132 +428,130 @@
 
     <!-- Start Footer
 {% endblock %}
-============================================= -->
 <footer class="bg-dark">
     <div class="container">
         <div class="row">
 
             <div class="f-items col-4 title-effect text-light default-padding">
 
-                <!-- Single Item -->
-                <div class="col-md-3 col-sm-6  equal-height item">
-                    <div class="f-item address">
-                        <img src="{% static 'img/logo-light.png' %}" alt="Logo">
-                        <p>
-                            20, floor, Queenslad Victoria Building. 60 california street california USA
-                        </p>
-                        <ul>
-                            <li>
-                                <span>Phone: </span> +123 456 7890
-                            </li>
-                            <li>
-                                <span>Email: </span> <a href="mailto:support@validtheme.com">support@validtheme.com</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- End Single Item -->
+<div class="col-md-3 col-sm-6  equal-height item">
+    <div class="f-item address">
+        <img src="{% static 'img/logo-light.png' %}" alt="Logo">
+        <p>
+            20, floor, Queenslad Victoria Building. 60 california street california USA
+        </p>
+        <ul>
+            <li>
+                <span>Phone: </span> +123 456 7890
+            </li>
+            <li>
+                <span>Email: </span> <a href="mailto:support@validtheme.com">support@validtheme.com</a>
+            </li>
+        </ul>
+    </div>
+</div>
 
-                <!-- Single Item -->
-                <div class="col-md-3 col-sm-6  equal-height item">
-                    <div class="f-item link">
-                        <h4>Food Menu</h4>
-                        <ul>
-                            <li>
-                                <a href="#">Chees croissants</a>
-                            </li>
-                            <li>
-                                <a href="#">Bruschetti</a>
-                            </li>
-                            <li>
-                                <a href="#">Awesome Vegetables</a>
-                            </li>
-                            <li>
-                                <a href="#">Tasty Snacks</a>
-                            </li>
-                            <li>
-                                <a href="#">Meal for whole family</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- End Single Item -->
+ Single Item -->
+<div class="col-md-3 col-sm-6  equal-height item">
+    <div class="f-item link">
+        <h4>Food Menu</h4>
+        <ul>
+            <li>
+                <a href="#">Chees croissants</a>
+            </li>
+            <li>
+                <a href="#">Bruschetti</a>
+            </li>
+            <li>
+                <a href="#">Awesome Vegetables</a>
+            </li>
+            <li>
+                <a href="#">Tasty Snacks</a>
+            </li>
+            <li>
+                <a href="#">Meal for whole family</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- End Single Item -->
 
-                <!-- Single Item -->
-                <div class="col-md-3 col-sm-6  equal-height item">
-                    <div class="f-item inst-feed">
-                        <h4>Instagram Feed</h4>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <img src="assets/img/gallery/1.jpg" alt="thumb">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="assets/img/gallery/2.jpg" alt="thumb">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="assets/img/gallery/6.jpg" alt="thumb">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="assets/img/gallery/4.jpg" alt="thumb">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="assets/img/gallery/3.jpg" alt="thumb">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="assets/img/gallery/5.jpg" alt="thumb">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- End Single Item -->
+<!-- Single Item -->
+<div class="col-md-3 col-sm-6  equal-height item">
+    <div class="f-item inst-feed">
+        <h4>Instagram Feed</h4>
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="assets/img/gallery/1.jpg" alt="thumb">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="assets/img/gallery/2.jpg" alt="thumb">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="assets/img/gallery/6.jpg" alt="thumb">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="assets/img/gallery/4.jpg" alt="thumb">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="assets/img/gallery/3.jpg" alt="thumb">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="assets/img/gallery/5.jpg" alt="thumb">
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- End Single Item -->
 
-                <!-- Single Item -->
-                <!-- End Single Item -->
+<!-- Single Item -->
+<!-- End Single Item -->
 
+</div>
+</div>
+</div>
+<!-- Start Footer Bottom -->
+<div class="footer-bottom bg-dark text-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p>&copy; Copyright 2019. All Rights Reserved by <a href="#">validthemes</a></p>
+            </div>
+            <div class="col-md-6 text-right link">
+                <ul>
+                    <li>
+                        <a href="#">Terms of user</a>
+                    </li>
+                    <li>
+                        <a href="#">License</a>
+                    </li>
+                    <li>
+                        <a href="#">Support</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
-    <!-- Start Footer Bottom -->
-    <div class="footer-bottom bg-dark text-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p>&copy; Copyright 2019. All Rights Reserved by <a href="#">validthemes</a></p>
-                </div>
-                <div class="col-md-6 text-right link">
-                    <ul>
-                        <li>
-                            <a href="#">Terms of user</a>
-                        </li>
-                        <li>
-                            <a href="#">License</a>
-                        </li>
-                        <li>
-                            <a href="#">Support</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Footer Bottom -->
+</div>
+<!-- End Footer Bottom -->
 </footer>
 <!-- End Footer -->
 
 <!-- jQuery Frameworks
 ============================================= -->
+
 <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/equal-height.min.js' %}"></script>
@@ -570,7 +568,72 @@
 <script src="{% static 'js/YTPlayer.min.js' %}"></script>
 <script src="{% static 'js/bootsnav.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
-
+<script>
+    $(document).ready(function () {
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                }
+            }
+        });
+        $('.register').click(function () {
+            $('#loginForm').remove()
+            $('.login').removeClass('active-button')
+            $(this).addClass('active-button');
+            if($('.choice').children().length > 0){
+                console.log('yES')
+            }else {
+                $('.choice').append('<div class="btn like-cooker">Aspaz kimi</div><div class="btn like-user">Istifadeci kimi</div>').hide().fadeIn(500);
+            }
+            $('.like-cooker').click(function () {
+                $.ajax({
+                    url:'cooker_register/',
+                    data:{},
+                    success:function (data) {
+                        $('.select').html(data).hide().fadeIn(1000);
+                    }
+                });
+            });
+            $('.like-user').click(function () {
+                $.ajax({
+                    url:'user_register/',
+                    data:{},
+                    success:function (data) {
+                        $('.select').html(data).hide().fadeIn(1000);
+                    }
+                });
+            })
+        })
+        $('.login').click(function () {
+            $('.like-user').remove();
+            $('.like-cooker').remove();
+            $('.register').removeClass('active-button')
+            $(this).addClass('active-button');
+            $.ajax({
+                url:'user_login/',
+                data:{},
+                success:function (data) {
+                    $('.select').html(data).hide().fadeIn(1000);
+                }
+            });
+            console.log('login')
+        })
+    })
+</script>
+{% if messages %}
+    <script type="application/javascript">
+        $(document).ready(function(){
+            $('#exampleModal').modal({show:true});
+        });
+    </script>
+{% endif %}
+{# {% block js %}#}
+{#    {% endblock %}#}
 </body>
 
 <!-- Mirrored from validthemes.com/themeforest/recafe/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 23 Sep 2019 16:11:18 GMT -->

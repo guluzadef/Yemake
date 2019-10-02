@@ -1,6 +1,19 @@
 {% extends 'index.html' %}
 {% load widget_tweaks %}
+{% load static %}
+
 {% block body %}
+     ============================================= -->
+    <div class="breadcrumb-area shadow text-center dark bg-fixed text-light" style="background-image: url({{ photos.example_page.url }});">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+            <h1>{{ text.addfood_page }}</h1>
+
+                </div>
+            </div>
+        </div>
+    </div>
     <br>
     <br>
     <div class="container">
@@ -10,8 +23,6 @@
 
 
                 {% for field in form %}
-                    {#                <label for="{{ field.id_for_label }}">{{ field.label }}:</label>#}
-
                     {% if field.name == "category" %}
                         <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
                         {{ field |add_class:"form-control" }}
@@ -21,7 +32,6 @@
                     {% else %}
                         {% render_field field class="form-control" placeholder=field.label %}
                     {% endif %}
-                    {#                {{ field |add_class:"form-control"}}#}
                 {% endfor %}
                 <button type="submit" class="btn btn-primary">Submit</button>
 

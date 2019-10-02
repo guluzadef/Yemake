@@ -1,0 +1,126 @@
+{% extends 'index.html' %}
+{% block body %}
+
+    <!-- End Header Top -->
+
+    <!-- Header
+    ============================================= -->
+
+    <!-- End Header -->
+
+    <!-- Start Breadcrumb
+    ============================================= -->
+    <div class="breadcrumb-area shadow text-center dark bg-fixed text-light"
+         style="background-image: url({{ photos.detail_page.url }});">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Blog Left Sidebar</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li class="active">Left Sidebar</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Breadcrumb -->
+
+    <!-- Start Blog
+    ============================================= -->
+    <div class="blog-area full-blog right-sidebar default-padding">
+        <div class="container">
+            <div class="row">
+                <div class="blog-items">
+                    <div class="blog-content col-md-8">
+                        <!-- Single Item -->
+                        <div class="single-item">
+                            <div class="thumb" style="width: 616px;height: 452px;" height="450px">
+                                <a href=''>
+                                <img src="{{ object.image.url }}">
+                            </a>
+                                <div class="meta">
+                                    <div class="tags">
+                                        <a href="#">{{object.name}}</a>
+{#                                        <a href="#">Pizza</a>#}
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <a href="#"><i class="fas fa-user"></i> {{ object.author }}</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="fas fa-calendar-alt"></i> {{ object.date }}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- End Single Item -->
+
+                        <!-- Pagination -->
+                    </div>
+
+                    <!-- Start Sidebar -->
+                    <div class="sidebar col-md-4">
+                        <aside>
+                            <div class="info">
+
+                                <h3>
+                                    <a href="">{{ object.aditional_info }} </a>
+                                </h3>
+                                <p>
+                                    {{ object.ingredients }}
+                                </p>
+                                <hr>
+                                <div class="delivery">
+                                    <h3>Çatdırılma-{{ object.delivery_type }}</h3>
+
+
+                                </div>
+                                <a class="btn circle btn-theme border btn-md" href="">Order Now</a>
+                            </div>
+                            <br>
+                            <br>
+
+                            <div class="sidebar-item social-sidebar">
+                                <div class="title">
+                                    <h4>follow us</h4>
+                                </div>
+                                <div class="sidebar-info">
+                                    <ul>
+                                        <li class="facebook">
+                                            <a href="#">
+                                                <i class="fab fa-facebook-f"></i>
+                                            </a>
+                                        </li>
+                                        <li class="twitter">
+                                            <a href="#">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li class="pinterest">
+                                            <a href="#">
+                                                <i class="fab fa-pinterest"></i>
+                                            </a>
+                                        </li>
+                                        <li class="g-plus">
+                                            <a href="#">
+                                                <i class="fab fa-google-plus-g"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                    <!-- End Start Sidebar -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Blog -->
+
+{% endblock %}

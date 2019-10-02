@@ -1,4 +1,5 @@
 {% load widget_tweaks %}
+
 <form method='POST' id="userForm" action="{% url 'user_register' %}">
     {% csrf_token %}
     {% for i in form %}

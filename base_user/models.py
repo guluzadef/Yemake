@@ -2,7 +2,7 @@ import json
 
 from django.db import models
 
-# Create your models here.
+# Create your models here.testsss
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
@@ -11,6 +11,7 @@ from django.utils import timezone
 from django.conf import settings
 
 # Create your models here.
+
 USER_MODEL = settings.AUTH_USER_MODEL
 
 
@@ -37,12 +38,13 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     about = models.TextField(_('about'), blank=True,null=True )
     profile_photo = models.ImageField(_('profilephoto'),default="default.jpg", blank=True)
     cover_photo = models.ImageField(_('coverphoto'), blank=True)
+    phone = models.CharField(max_length=9,null=True,blank=True)
     # aditional fields
     type_choice = (
         ("C", "Cooker"),
         ("U", "User")
     )
-    user_type = models.CharField(max_length=30,choices=type_choice,default='Cooker')
+    user_type = models.CharField(max_length=30,choices=type_choice)
     gender = models.BooleanField(choices=(
         (True, "Male"),
         (False, "Female")
@@ -54,7 +56,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     )
     is_active = models.BooleanField(
         _('active'),
-        default=True,
+        default=False,
         help_text=_(
             'Designates whether this user should be treated as active. '
             'Unselect this instead of deleting accounts.'
